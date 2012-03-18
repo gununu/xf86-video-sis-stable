@@ -47,6 +47,30 @@
 #include "windowstr.h"
 #endif
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 5
+#include <inputstr.h> /* for inputInfo */
+#endif
+
+/*
+ * LookupWindow was removed with video abi 11.
+ */
+#if (GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 4)
+#ifndef DixGetAttrAccess
+#define DixGetAttrAccess (1<<4)
+#endif
+#endif
+
+#if (GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 2)
+static inline int
+dixLookupWindow(WindowPtr *pWin, XID id, ClientPtr client, Mask access)
+{
+	*pWin = LookupWindow(id, client);
+	if (!*pWin)
+	return BadWindow;
+	return Success;
+}
+#endif
+
 void		SiSMFBInitMergedFB(ScrnInfoPtr pScrn);
 void		SiSMFBHandleModesCRT2(ScrnInfoPtr pScrn, ClockRangePtr clockRanges);
 void		SiSMFBMakeModeList(ScrnInfoPtr pScrn);
@@ -1498,9 +1522,22 @@ SISMFBPointerMoved(int scrnIndex, int x, int y)
 	  }
        }
        if(doit) {
-	  UpdateCurrentTime();
 	  sigstate = xf86BlockSIGIO();
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 15
+           {
+		double dx = x, dy = y;
+		miPointerSetPosition(inputInfo.pointer, Absolute, &dx, &dy);
+		x = (int)dx;
+		y = (int)dy;
+	   }
+#elif GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 13
+	  miPointerSetPosition(inputInfo.pointer, Absolute, x, y);
+#elif GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 5
+	  miPointerSetPosition(inputInfo.pointer, x, y);
+#else
+	  UpdateCurrentTime();
 	  miPointerAbsoluteCursor(x, y, currentTime.milliseconds);
+#endif
 	  xf86UnblockSIGIO(sigstate);
 	  return;
        }
@@ -2490,8 +2527,9 @@ SiSProcXineramaGetState(ClientPtr client)
     register int		n;
 
     REQUEST_SIZE_MATCH(xPanoramiXGetStateReq);
-    pWin = LookupWindow(stuff->window, client);
-    if(!pWin) return BadWindow;
+    rc = dixLookupWindow(&pWin, stuff->window, client, DixGetAttrAccess);
+    if (rc != Success)
+        return rc;
 
     rep.type = X_Reply;
     rep.length = 0;
@@ -2515,8 +2553,9 @@ SiSProcXineramaGetScreenCount(ClientPtr client)
     register int			n;
 
     REQUEST_SIZE_MATCH(xPanoramiXGetScreenCountReq);
-    pWin = LookupWindow(stuff->window, client);
-    if(!pWin) return BadWindow;
+    rc = dixLookupWindow(&pWin, stuff->window, client, DixGetAttrAccess);
+    if (rc != Success)
+        return rc;
 
     rep.type = X_Reply;
     rep.length = 0;
@@ -2540,8 +2579,9 @@ SiSProcXineramaGetScreenSize(ClientPtr client)
     register int			n;
 
     REQUEST_SIZE_MATCH(xPanoramiXGetScreenSizeReq);
-    pWin = LookupWindow (stuff->window, client);
-    if(!pWin)  return BadWindow;
+    rc = dixLookupWindow(&pWin, stuff->window, client, DixGetAttrAccess);
+    if (rc != Success)
+        return rc;
 
     rep.type = X_Reply;
     rep.length = 0;
