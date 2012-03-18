@@ -1005,7 +1005,7 @@ typedef struct {
     pciVideoPtr		PciInfo;
 #endif
     
-    PCITAG		PciTag;
+    CARD32		PciTag;
 
     int			PciBus, PciDevice, PciFunc;
     EntityInfoPtr	pEnt;

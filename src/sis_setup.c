@@ -156,14 +156,14 @@ sis_pci_write_host_bridge_u8(int offset, unsigned char value)
 unsigned int
 sis_pci_read_device_u32(int device, int offset)
 {
-    PCITAG tag = pciTag(0, device, 0);
+    CARD32 tag = pciTag(0, device, 0);
     return pciReadLong(tag, offset);
 }
 
 unsigned char
 sis_pci_read_device_u8(int device, int offset)
 {
-    PCITAG tag = pciTag(0, device, 0);
+    CARD32 tag = pciTag(0, device, 0);
     return pciReadByte(tag, offset);
 }
 

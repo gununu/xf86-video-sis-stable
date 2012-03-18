@@ -241,7 +241,7 @@ struct SiS_Private
 	unsigned char			ChipType;
 	unsigned char			ChipRevision;
 #ifdef SIS_XORG_XF86
-	PCITAG				PciTag;
+	CARD32				PciTag;
 #endif
 #ifdef SIS_LINUX_KERNEL
 	void				*ivideo;
