@@ -47,7 +47,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "xf86Resources.h"
 #endif
 #include "compiler.h"
-#include "xf86PciInfo.h"
+#include "sis_pci.h.h"
 #include "xf86Pci.h"
 #include "xf86fbman.h"
 #include "regionstr.h"

@@ -23,11 +23,11 @@
 # Initialize Autoconf
 AC_PREREQ([2.60])
 AC_INIT([xf86-video-sis],
-        0.9.1,
+        [0.10.3],
         [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],
-        xf86-video-sis)
+        [xf86-video-sis])
 AC_CONFIG_SRCDIR([Makefile.am])
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR(.)
 
 # Initialize Automake
@@ -43,17 +43,16 @@ XORG_DEFAULT_OPTIONS
 # Initialize libtool
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
-XORG_PROG_RAWCPP
 
 AH_TOP([#include "xorg-server.h"])
 
 AC_ARG_WITH(xorg-module-dir,
-            AC_HELP_STRING([--with-xorg-module-dir=DIR],
+            AS_HELP_STRING([--with-xorg-module-dir=DIR],
                            [Default xorg module directory [[default=$libdir/xorg/modules]]]),
             [moduledir="$withval"],
             [moduledir="$libdir/xorg/modules"])
 
-AC_ARG_ENABLE(dri, AC_HELP_STRING([--disable-dri],
+AC_ARG_ENABLE(dri, AS_HELP_STRING([--disable-dri],
                                   [Disable DRI support [[default=auto]]]),
               [DRI="$enableval"],
               [DRI=auto])
@@ -129,9 +128,10 @@ XORG_RELEASE_VERSION
 
 XORG_CHECK_LINUXDOC
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
 	src/xvmc/Makefile
 	man/Makefile
 ])
+AC_OUTPUT

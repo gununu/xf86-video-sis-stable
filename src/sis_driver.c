@@ -8927,10 +8927,11 @@ SISDisplayPowerManagementSet(ScrnInfoPtr pScrn, int PowerManagementMode, int fla
     }
 #endif
 
-    /* Work around a bug in xf86Event.c:
-     * pScrn->DPMSSet is being called without a previous
-     * call to xf86EnableAccess(). So we have no hardware
-     * access here.
+    /* FIXME: in old servers, DPMSSet was supposed to be called without open
+     * the correct PCI bridges before access the hardware. Now we have this
+     * hook wrapped by the vga arbiter which should do all the work, in
+     * kernels that implement it. For this case we might not want this hack
+     * bellow.
      */
     outSISIDXREG(SISSR,0x05,0x86);
     inSISIDXREG(SISSR,0x05,pmreg);
