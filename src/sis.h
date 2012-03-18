@@ -72,7 +72,7 @@
 #include "xf86Resources.h"
 #endif
 #include "xf86.h"
-#include "xf86PciInfo.h"
+#include "sis_pci.h"
 #include "xf86Cursor.h"
 #include "xf86cmap.h"
 #include "vbe.h"
@@ -322,48 +322,6 @@
 #define SISVERBLEVEL 3
 #else
 #define SISVERBLEVEL 4
-#endif
-
-#ifndef PCI_CHIP_SIS315H
-#define PCI_CHIP_SIS315H	0x0310
-#endif
-#ifndef PCI_CHIP_SIS315
-#define PCI_CHIP_SIS315		0x0315
-#endif
-#ifndef PCI_CHIP_SIS315PRO
-#define PCI_CHIP_SIS315PRO	0x0325
-#endif
-#ifndef PCI_CHIP_SIS550
-#define PCI_CHIP_SIS550		0x5315	/* 550_VGA */
-#endif
-#ifndef PCI_CHIP_SIS650
-#define PCI_CHIP_SIS650		0x6325  /* 650_VGA and 740_VGA */
-#endif
-#ifndef PCI_CHIP_SIS330
-#define PCI_CHIP_SIS330		0x0330
-#endif
-#ifndef PCI_CHIP_SIS660
-#define PCI_CHIP_SIS660		0x6330	/* 661_VGA, 741_VGA, 760_VGA, 761_VGA */
-#endif
-#ifndef PCI_CHIP_SIS340
-#define PCI_CHIP_SIS340		0x0340
-#endif
-#ifndef PCI_CHIP_SIS670
-#define PCI_CHIP_SIS670		0x6350	/* 670_VGA, 770_VGA */
-#endif
-#ifndef PCI_CHIP_SIS671
-#define PCI_CHIP_SIS671		0x6351	/* 671_VGA, 771_VGA */
-#endif
-
-#ifndef PCI_VENDOR_XGI
-#define PCI_VENDOR_XGI		0x18ca
-#endif
-
-#ifndef PCI_CHIP_XGIXG20
-#define PCI_CHIP_XGIXG20	0x0020
-#endif
-#ifndef PCI_CHIP_XGIXG40
-#define PCI_CHIP_XGIXG40	0x0040
 #endif
 
 /* pSiS->Flags (old series only) */
