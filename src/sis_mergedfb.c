@@ -2525,6 +2525,7 @@ SiSProcXineramaGetState(ClientPtr client)
     WindowPtr			pWin;
     xPanoramiXGetStateReply	rep;
     register int		n;
+    int				rc;
 
     REQUEST_SIZE_MATCH(xPanoramiXGetStateReq);
     rc = dixLookupWindow(&pWin, stuff->window, client, DixGetAttrAccess);
@@ -2551,6 +2552,7 @@ SiSProcXineramaGetScreenCount(ClientPtr client)
     WindowPtr				pWin;
     xPanoramiXGetScreenCountReply	rep;
     register int			n;
+    int					rc;
 
     REQUEST_SIZE_MATCH(xPanoramiXGetScreenCountReq);
     rc = dixLookupWindow(&pWin, stuff->window, client, DixGetAttrAccess);
@@ -2577,6 +2579,7 @@ SiSProcXineramaGetScreenSize(ClientPtr client)
     WindowPtr				pWin;
     xPanoramiXGetScreenSizeReply	rep;
     register int			n;
+    int					rc;
 
     REQUEST_SIZE_MATCH(xPanoramiXGetScreenSizeReq);
     rc = dixLookupWindow(&pWin, stuff->window, client, DixGetAttrAccess);
