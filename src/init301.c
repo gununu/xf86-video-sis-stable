@@ -5501,8 +5501,8 @@ SiS_SetCRT2FIFO_300(struct SiS_Private *SiS_Pr,unsigned short ModeNo)
 	pci50 = sisfb_read_nbridge_pci_dword(SiS_Pr, 0x50);
 	pciA0 = sisfb_read_nbridge_pci_dword(SiS_Pr, 0xa0);
 #else
-	pci50 = pciReadLong(0x00000000, 0x50);
-	pciA0 = pciReadLong(0x00000000, 0xA0);
+	pci50 = sis_pci_read_host_bridge_u32(0x50);
+	pciA0 = sis_pci_read_host_bridge_u32(0xA0);
 #endif
 
         if(SiS_Pr->ChipType == SIS_730) {

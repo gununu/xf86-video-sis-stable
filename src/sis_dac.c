@@ -544,8 +544,8 @@ SiS300Save(ScrnInfoPtr pScrn, SISRegPtr sisReg)
 
     /* Save FQBQ and GUI timer settings */
     if(pSiS->Chipset == PCI_CHIP_SIS630) {
-       sisReg->sisRegsPCI50 = pciReadLong(0x00000000, 0x50);
-       sisReg->sisRegsPCIA0 = pciReadLong(0x00000000, 0xA0);
+       sisReg->sisRegsPCI50 = sis_pci_read_host_bridge_u32(0x50);
+       sisReg->sisRegsPCIA0 = sis_pci_read_host_bridge_u32(0xA0);
 #ifdef TWDEBUG
        xf86DrvMsg(pScrn->scrnIndex, X_INFO,
 		"PCI Config 50 = %lx\n", sisReg->sisRegsPCI50);
@@ -684,9 +684,9 @@ SiS300Restore(ScrnInfoPtr pScrn, SISRegPtr sisReg)
 
     /* Restore FQBQ and GUI timer settings */
     if(pSiS->Chipset == PCI_CHIP_SIS630) {
-       temp1 = pciReadLong(0x00000000, 0x50);
-       temp2 = pciReadLong(0x00000000, 0xA0);
-       if(pciReadLong(0x00000000, 0x00) == 0x06301039) {
+       temp1 = sis_pci_read_host_bridge_u32(0x50);
+       temp2 = sis_pci_read_host_bridge_u32(0xA0);
+       if(sis_pci_read_host_bridge_u32(0x00) == 0x06301039) {
           temp1 &= 0xf0ffffff;
           temp1 |= (sisReg->sisRegsPCI50 & ~0xf0ffffff);
 	  temp2 &= 0xf0ffffff;

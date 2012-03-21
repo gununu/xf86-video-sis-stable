@@ -2631,7 +2631,7 @@ SiS_SetCRT1FIFO_630(struct SiS_Private *SiS_Pr, unsigned short ModeNo,
 #ifdef SIS_LINUX_KERNEL
    templ = sisfb_read_nbridge_pci_dword(SiS_Pr, 0x50);
 #else
-   templ = pciReadLong(0x00000000, 0x50);
+   templ = sis_pci_read_host_bridge_u32(0x50);
 #endif
 
    if(SiS_Pr->ChipType == SIS_730) {
@@ -2657,7 +2657,7 @@ SiS_SetCRT1FIFO_630(struct SiS_Private *SiS_Pr, unsigned short ModeNo,
    templ = sisfb_read_nbridge_pci_dword(SiS_Pr, 0xA0);
 #else
    pciWriteLong(0x00000000, 0x50, templ);
-   templ = pciReadLong(0x00000000, 0xA0);
+   templ = sis_pci_read_host_bridge_u32(0xA0);
 #endif
 
    /* GUI grant timer (PCI config 0xA3) */

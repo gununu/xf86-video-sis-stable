@@ -1253,7 +1253,6 @@ SiSReadROM(ScrnInfoPtr pScrn)
 	     xf86DrvMsg(pScrn->scrnIndex, X_WARNING,
 		"Could not allocate memory for video BIOS image\n");
 	  } else {
-	     ULong  segstart;
 	     UShort mypciid = pSiS->Chipset;
 	     UShort mypcivendor = (pSiS->ChipFlags & SiSCF_IsXGI) ? PCI_VENDOR_XGI : PCI_VENDOR_SIS;
 	     Bool   found = FALSE, readpci = FALSE;
@@ -1279,6 +1278,16 @@ SiSReadROM(ScrnInfoPtr pScrn)
 			      break;
 	     }
 
+#if XSERVER_LIBPCIACCESS
+	     if(readpci) {
+	       pSiS->PciInfo->rom_size = biossize;
+	       pci_device_read_rom(pSiS->PciInfo, pSiS->BIOS);
+	       if(SISCheckBIOS(pSiS, mypciid, mypcivendor, biossize)) {
+                 found = TRUE;
+               }
+             }
+#else
+
 	     if(readpci) {
 #ifndef XSERVER_LIBPCIACCESS
 		xf86ReadPciBIOS(0, pSiS->PciTag, 0, pSiS->BIOS, biossize);
@@ -1291,6 +1300,7 @@ SiSReadROM(ScrnInfoPtr pScrn)
 	     }
 
 	     if(!found) {
+		ULong segstart;
 		for(segstart = BIOS_BASE; segstart < 0x000f0000; segstart += 0x00001000) {
 
 #if XF86_VERSION_CURRENT < XF86_VERSION_NUMERIC(4,2,99,0,0)
@@ -1309,6 +1319,8 @@ SiSReadROM(ScrnInfoPtr pScrn)
 		   break;
 		}
              }
+
+#endif
 
 	     if(found) {
 		UShort romptr = pSiS->BIOS[0x16] | (pSiS->BIOS[0x17] << 8);
@@ -3605,7 +3617,7 @@ SISPreInit(ScrnInfoPtr pScrn, int flags)
 	  break;
        case PCI_CHIP_SIS630: /* 630 + 730 */
 	  pSiS->ChipType = SIS_630;
-	  if(pciReadLong(0x00000000, 0x00) == 0x07301039) {
+	  if(sis_pci_read_host_bridge_u32(0x00) == 0x07301039) {
 	     pSiS->ChipType = SIS_730;
 	  }
 	  pSiS->SiS_SD_Flags |= SiS_SD_IS300SERIES;
@@ -3649,7 +3661,7 @@ SISPreInit(ScrnInfoPtr pScrn, int flags)
 	  break;
        case PCI_CHIP_SIS650: /* 650 + 740 */
 	  pSiS->ChipType = SIS_650;
-	  if(pciReadLong(0x00000000, 0x00) == 0x07401039) {
+	  if(sis_pci_read_host_bridge_u32(0x00) == 0x07401039) {
 	     pSiS->ChipType = SIS_740;
 	  }
 	  pSiS->ChipFlags |= (	SiSCF_Integrated	|
@@ -3674,7 +3686,7 @@ SISPreInit(ScrnInfoPtr pScrn, int flags)
 	  break;
        case PCI_CHIP_SIS660: /* 660, 661, 741, 760, 761, 662*/
 	  {	  	
-	     ULong hpciid = pciReadLong(0x00000000, 0x00);
+	     ULong hpciid = sis_pci_read_host_bridge_u32(0x00);
 	     switch(hpciid) {
 	     case 0x06601039:
 		pSiS->ChipType = SIS_660;
@@ -3738,7 +3750,7 @@ SISPreInit(ScrnInfoPtr pScrn, int flags)
 	  break;
        case PCI_CHIP_SIS670: /* 670, 770 */
 	  {
-	     ULong hpciid = pciReadLong(0x00000000, 0x00);
+	     ULong hpciid = sis_pci_read_host_bridge_u32(0x00);
 	     switch(hpciid) {
 	     case 0x06701039:
 		pSiS->ChipType = SIS_670;
@@ -3835,7 +3847,7 @@ SISPreInit(ScrnInfoPtr pScrn, int flags)
        case PCI_CHIP_SIS6326:
 	  pSiS->oldChipset = OC_SIS6326; break;
        case PCI_CHIP_SIS530:
-	  if(pciReadLong(0x00000000, 0x00) == 0x06201039) {
+	  if(sis_pci_read_host_bridge_u32(0x00) == 0x06201039) {
 	     pSiS->oldChipset = OC_SIS620;
 	  } else {
 	     if((pSiS->ChipRev & 0x0f) < 0x0a)
