@@ -6048,7 +6048,9 @@ static Bool
 SISMapMem(ScrnInfoPtr pScrn)
 {
     SISPtr pSiS = SISPTR(pScrn);
+#ifndef XSERVER_LIBPCIACCESS
     int mmioFlags = VIDMEM_MMIO;
+#endif
 #ifdef SISDUALHEAD
     SISEntPtr pSiSEnt = pSiS->entityPrivate;
 #endif
