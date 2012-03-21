@@ -1011,7 +1011,7 @@ SiS_CheckKernelFB(ScrnInfoPtr pScrn)
 	     sprintf(name, "/dev/fb/%1d", (i - 8));
 	  }
 
-          if((fd = open(name, 'r')) != -1) {
+          if((fd = open(name, O_RDONLY)) != -1) {
 
 	     Bool gotit = FALSE;
 
@@ -6833,7 +6833,7 @@ SiS_SiSFB_Lock(ScrnInfoPtr pScrn, Bool lock)
     if(!pSiS->sisfbfound) return;
     if(!pSiS->sisfb_havelock) return;
 
-    if((fd = open(pSiS->sisfbdevname, 'r')) != -1) {
+    if((fd = open(pSiS->sisfbdevname, O_RDONLY)) != -1) {
        parm = lock ? 1 : 0;
        ioctl(fd, SISFB_SET_LOCK, &parm);
        close(fd);
@@ -6952,7 +6952,7 @@ SiSRestore_SiSFB_TVParms(ScrnInfoPtr pScrn)
     if(!pSiS->sisfb_tvposvalid) return;
     if(!(pSiS->sisfbdevname[0])) return;
 
-    if((fd = open(pSiS->sisfbdevname, 'r')) != -1) {
+    if((fd = open(pSiS->sisfbdevname, O_RDONLY)) != -1) {
        parm = (CARD32)((pSiS->sisfb_tvxpos << 16) | (pSiS->sisfb_tvypos & 0xffff));
        ioctl(fd, SISFB_SET_TVPOSOFFSET, &parm);
        close(fd);
