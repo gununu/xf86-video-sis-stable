@@ -775,9 +775,10 @@ static Bool SISEnterVT(VT_FUNC_ARGS_DECL);
 static void SISLeaveVT(VT_FUNC_ARGS_DECL);
 static Bool SISCloseScreen(CLOSE_SCREEN_ARGS_DECL);
 static Bool SISSaveScreen(ScreenPtr pScreen, int mode);
-static Bool SISSwitchMode(int scrnIndex, DisplayModePtr mode, int flags);
-static void SISNewAdjustFrame(int scrnIndex, int x, int y, int flags);
-static Bool SISPMEvent(int scrnIndex, pmEvent event, Bool undo);/*APM-ACPI, adding by Ivans.*/
+static void SISNewAdjustFrame(ADJUST_FRAME_ARGS_DECL);
+
+/*APM-ACPI, adding by Ivans.*/
+static Bool SISPMEvent(SCRN_ARG_TYPE arg, pmEvent event, Bool undo);
 
 static Bool SISSwitchMode(SWITCH_MODE_ARGS_DECL);
 

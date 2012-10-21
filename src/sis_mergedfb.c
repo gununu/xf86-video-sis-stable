@@ -76,8 +76,8 @@ void		SiSMFBHandleModesCRT2(ScrnInfoPtr pScrn, ClockRangePtr clockRanges);
 void		SiSMFBMakeModeList(ScrnInfoPtr pScrn);
 void		SiSMFBCorrectVirtualAndLayout(ScrnInfoPtr pScrn);
 void		SiSMFBSetDpi(ScrnInfoPtr pScrn1, ScrnInfoPtr pScrn2, SiSScrn2Rel srel);
-void		SISMFBPointerMoved(int scrnIndex, int x, int y);
-void		SISMFBAdjustFrame(int scrnIndex, int x, int y, int flags);
+void		SISMFBPointerMoved(SCRN_ARG_TYPE arg, int x, int y);
+void		SISMFBAdjustFrame(SCRN_ARG_TYPE arg, int x, int y, int flags);
 
 Bool		SiSMFBRebuildModelist(ScrnInfoPtr pScrn, ClockRangePtr clockRanges);
 Bool		SiSMFBRevalidateModelist(ScrnInfoPtr pScrn, ClockRangePtr clockRanges);
@@ -1744,7 +1744,9 @@ SISMFBPointerMoved(SCRN_ARG_TYPE arg, int x, int y)
        /* Need to go the official way to avoid hw access and
         * to update Xv's overlays
         */
-       (pScrn1->AdjustFrame)(scrnIndex, pScrn1->frameX0, pScrn1->frameY0, 0);
+//XXX: goodbye mergedfb
+
+//       (pScrn1->AdjustFrame)(ADJUST_FRAME_ARGS(scrnIndex, pScrn1->frameX0, pScrn1->frameY0, 0);
     }
 }
 
@@ -2676,15 +2678,11 @@ SiSProcXineramaSelectInput(ClientPtr client)
     int lookup_ret;
 
     REQUEST_SIZE_MATCH(xXineramaSelectInputReq);
-    /*IvansLee define NEW_XORG_VERSION.*/
-    #if NEW_XORG_VERSION == 1
-    pWin = SecurityLookupWindow(stuff->window,client,DixWriteAccess);
-    #else
-    pWin = SecurityLookupWindow(stuff->window,client,SecurityWriteAccess);
-    #endif
+
+    int rc = dixLookupWindow(&pWin, stuff->window, client, DixWriteAccess);
+    if (rc != Success)
+      return BadWindow;
     
-    if(!pWin)
-       return BadWindow;
     #if NEW_XORG_VERSION == 1 /*New Xorg Version >= 1.4 */
 	 lookup_ret = dixLookupResourceByType((pointer) &pHead, 
 						 pWin->drawable.id, EventType, 

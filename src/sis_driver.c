@@ -78,6 +78,11 @@
 
 #include "sis.h"
 
+//#define XF86_SCRN_INTERFACE
+//#undef COMPAT_API_H
+//#include "picturestr.h"
+//#include "compat-api.h"
+
 #if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 6
 #include "xf86RAC.h"
 #endif
@@ -8599,7 +8604,7 @@ SISModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 	        /* No need to go through pScrn->AdjustFrame; the coords
 	         * didn't change
 	         */
-		SISAdjustFrame(ADJUST_FRAME_ARGSpSiSEnt->pScrn_1,
+		SISAdjustFrame(ADJUST_FRAME_ARGS(pSiSEnt->pScrn_1,
 			       pSiSEnt->pScrn_1->frameX0,
 			       pSiSEnt->pScrn_1->frameY0));
 	     }
@@ -8647,7 +8652,7 @@ SISModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 
 		SiS_SiSLVDSBackLight(pSiS, TRUE);
 
-		(*pScrn->AdjustFrame)(pScrn->scrnIndex, pScrn->frameX0, pScrn->frameY0, 0);
+		(*pScrn->AdjustFrame)(ADJUST_FRAME_ARGS(pScrn, pScrn->frameX0, pScrn->frameY0));
 
 	     } else {
 #endif
@@ -8781,7 +8786,7 @@ SISBlockHandler(BLOCKHANDLER_ARGS_DECL)
 #endif
 
     if(pSiS->AdjustFramePending && pSiS->AdjustFrame) {
-       (*pSiS->AdjustFrame)(i, pSiS->AdjustFrameX, pSiS->AdjustFrameY, pSiS->AdjustFrameFlags);
+       (*pSiS->AdjustFrame)(ADJUST_FRAME_ARGS(arg, pSiS->AdjustFrameX, pSiS->AdjustFrameY));
        /* Reset it since Xv insists on installing its own every time. */
        pScrn->AdjustFrame = SISNewAdjustFrame;
        pSiS->AdjustFramePending = FALSE;
@@ -10395,7 +10400,7 @@ SISSwitchMode(SWITCH_MODE_ARGS_DECL)
 /*
 #ifdef SISDRI    
     if(pSiS->directRenderingEnabled) {       
-	DRILock(screenInfo.screens[scrnIndex], DRM_LOCK_QUIESCENT);
+	DRILock(xf86ScrnToScreen(pScrn), DRM_LOCK_QUIESCENT);
     }
 #endif
 */
@@ -10527,7 +10532,7 @@ SISNewAdjustFrame(ADJUST_FRAME_ARGS_DECL)
     pSiS->AdjustFramePending = TRUE;
     pSiS->AdjustFrameX = x;
     pSiS->AdjustFrameY = y;
-    pSiS->AdjustFrameFlags = flags;
+    pSiS->AdjustFrameFlags = 0;
 }
 
 void
@@ -10545,7 +10550,7 @@ SISAdjustFrame(ADJUST_FRAME_ARGS_DECL)
 
 #ifdef SISMERGED
     if(pSiS->MergedFB) {
-	SISMFBAdjustFrame(scrnIndex, x, y, flags);
+	SISMFBAdjustFrame(arg, x, y, 0);
 	return;
     }
 #endif
@@ -11178,7 +11183,7 @@ SISHotkeySwitchCRT2Status(ScrnInfoPtr pScrn,ULong newvbflags,ULong newvbflags3)
    pSiS->VBFlags3 = pSiS->VBFlags_backup3 = newvbflags3;  
  
    pSiS->skipswitchcheck = TRUE;
-   if(!((*pScrn->SwitchMode)(pScrn->scrnIndex,pScrn->currentMode,0)))
+   if(!((*pScrn->SwitchMode)(SWITCH_MODE_ARGS(pScrn, pScrn->currentMode))))
    {
           pSiS->skipswitchcheck = FALSE;
 	  return FALSE;
@@ -11187,7 +11192,7 @@ SISHotkeySwitchCRT2Status(ScrnInfoPtr pScrn,ULong newvbflags,ULong newvbflags3)
 
    /*xf86DrvMsg(0,X_INFO,"frameX0=%d, frameY0=%d.\n",pScrn->frameX0,pScrn->frameY0);*/
 
-   SISAdjustFrame(pScrn->scrnIndex, pScrn->frameX0, pScrn->frameY0,0);
+   SISAdjustFrame(ADJUST_FRAME_ARGS(pScrn, pScrn->frameX0, pScrn->frameY0));
 
    return TRUE;
 
@@ -11248,14 +11253,14 @@ SISHotkeySwitchCRT1Status(ScrnInfoPtr pScrn, int onoff)
  (*pSiS->SyncAccel)(pScrn); 
   
  pSiS->skipswitchcheck = TRUE;
- if(!((*pScrn->SwitchMode)(pScrn->scrnIndex,pScrn->currentMode,0)))
+ if(!((*pScrn->SwitchMode)(SWITCH_MODE_ARGS(pScrn, pScrn->currentMode))))
  {
        pSiS->skipswitchcheck = FALSE;
        return FALSE;
  }
  pSiS->skipswitchcheck = FALSE;
 
- SISAdjustFrame(pScrn->scrnIndex, pScrn->frameX0, pScrn->frameY0,0);
+ SISAdjustFrame(ADJUST_FRAME_ARGS(pScrn, pScrn->frameX0, pScrn->frameY0));
  
  return TRUE;
 }
@@ -11303,7 +11308,7 @@ SISHotkeySwitchMode(ScrnInfoPtr pScrn, Bool adjust)
    
                xf86ZoomViewport(pScreen,1);
 
-	       SISAdjustFrame(pScrn->scrnIndex,0,0,0);
+	       SISAdjustFrame(ADJUST_FRAME_ARGS(pScrn, 0,0));
 
    
    return TRUE;
@@ -11331,13 +11336,13 @@ SISPMEvent(SCRN_ARG_TYPE arg, pmEvent event, Bool undo)
          {        
               xf86DrvMsg(0,X_INFO,"PM_EVENT:event=%d,undo=%d.\n",event,undo);		 
 		 if (!undo && !pSiS->suspended) {
-	               pScrn->LeaveVT(scrnIndex, 0);
+	               pScrn->LeaveVT(VT_FUNC_ARGS);
 	               pSiS->suspended = TRUE;
 	               sleep(0);
                    } 
 		     else if (undo && pSiS->suspended) {
 	            sleep(0);
-	            pScrn->EnterVT(scrnIndex, 0);
+	            pScrn->EnterVT(VT_FUNC_ARGS);
 	            pSiS->suspended = FALSE;
                   }
 	   }
@@ -11349,7 +11354,7 @@ SISPMEvent(SCRN_ARG_TYPE arg, pmEvent event, Bool undo)
       {
 	  	  if (pSiS->suspended) {
 	        sleep(0);
-	        pScrn->EnterVT(scrnIndex, 0);
+	        pScrn->EnterVT(VT_FUNC_ARGS);
 	        pSiS->suspended = FALSE;
 	        SaveScreens(SCREEN_SAVER_FORCER, ScreenSaverReset);
                }

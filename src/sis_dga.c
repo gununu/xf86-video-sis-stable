@@ -39,6 +39,12 @@
 #endif
 
 #include "sis.h"
+
+#undef COMPAT_API_H
+#define XF86_SCRN_INTERFACE
+#include "picturestr.h"
+#include "compat-api.h"
+
 #include "dgaproc.h"
 
 #include "sis_regs.h"

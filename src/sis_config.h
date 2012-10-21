@@ -80,6 +80,9 @@
 #endif
 #endif
 
+// XXX: ??
+#undef XF86_HAS_SCRN_CONV
+
 /* End of configurable stuff --------------------------------- */
 
 

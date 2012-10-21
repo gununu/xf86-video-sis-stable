@@ -33,6 +33,8 @@
 #define SetGlyphPicture(g, s, p) GlyphPicture((g))[(s)->myNum] = p
 #endif
 
+#undef XF86_HAS_SCRN_CONV
+
 #ifndef XF86_HAS_SCRN_CONV
 #define xf86ScreenToScrn(s) xf86Screens[(s)->myNum]
 #define xf86ScrnToScreen(s) screenInfo.screens[(s)->scrnIndex]

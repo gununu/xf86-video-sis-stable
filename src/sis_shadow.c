@@ -81,7 +81,7 @@ SISPointerMoved(SCRN_ARG_TYPE arg, int x, int y)
        }
 
        if(framechanged && pScrn->AdjustFrame)
-	  pScrn->AdjustFrame(pScrn->scrnIndex, pScrn->frameX0, pScrn->frameY0, 0);
+	  pScrn->AdjustFrame(ADJUST_FRAME_ARGS(pScrn, pScrn->frameX0, pScrn->frameY0));
 
     } else {
 

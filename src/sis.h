@@ -64,12 +64,17 @@
 #define TWDEBUG    
 #endif
 
+#include <stropts.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "compiler.h"
 #include "xf86Pci.h"
 #include "xf86_OSproc.h"
-#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 6
-#include "xf86Resources.h"
-#endif
+
+//#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 6
+//#include "xf86Resources.h"
+//#endif
+
 #include "xf86.h"
 #include "sis_pci.h"
 #include "xf86Cursor.h"
@@ -84,8 +89,6 @@
 #else
 #include "xf86_ansic.h"
 #endif
-
-#include "compat-api.h"
 
 #ifndef DEFAULT_DPI
 #define DEFAULT_DPI 96
@@ -269,6 +272,9 @@
 #define EXTENSION_PROC_ARGS void *
 #include "extnsionst.h" 			/* required */
 #include <X11/extensions/panoramiXproto.h> 	/* required */
+
+#include "picturestr.h"
+#include "compat-api.h"
 
 #ifndef RR_Rotate_0
 #define RR_Rotate_0 1
