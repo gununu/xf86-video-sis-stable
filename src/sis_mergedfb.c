@@ -1434,9 +1434,10 @@ InRegion(int x, int y, region r)
 
 
 void
-SISMFBPointerMoved(int scrnIndex, int x, int y)
+SISMFBPointerMoved(SCRN_ARG_TYPE arg, int x, int y)
 {
-    ScrnInfoPtr	pScrn1 = xf86Screens[scrnIndex];
+    SCRN_INFO_PTR(arg);
+    ScrnInfoPtr pScrn1 = pScrn;
     SISPtr	pSiS = SISPTR(pScrn1);
     ScrnInfoPtr	pScrn2 = pSiS->CRT2pScrn;
     region	out, in1, in2, f2, f1;
@@ -1748,9 +1749,10 @@ SISMFBPointerMoved(int scrnIndex, int x, int y)
 }
 
 void
-SISMFBAdjustFrame(int scrnIndex, int x, int y, int flags)
+SISMFBAdjustFrame(SCRN_ARG_TYPE arg, int x, int y, int flags)
 {
-    ScrnInfoPtr pScrn1 = xf86Screens[scrnIndex];
+    SCRN_INFO_PTR(arg);
+    ScrnInfoPtr pScrn1 = pScrn;
     SISPtr pSiS = SISPTR(pScrn1);
     ScrnInfoPtr pScrn2 = pSiS->CRT2pScrn;
     int HTotal = pSiS->CurrentLayout.mode->HDisplay;

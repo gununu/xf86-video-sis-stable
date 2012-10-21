@@ -770,14 +770,16 @@ struct _SISFB_INFO {
 static void SISIdentify(int flags);
 static Bool SISProbe(DriverPtr drv, int flags);
 static Bool SISPreInit(ScrnInfoPtr pScrn, int flags);
-static Bool SISScreenInit(int Index, ScreenPtr pScreen, int argc, char **argv);
-static Bool SISEnterVT(int scrnIndex, int flags);
-static void SISLeaveVT(int scrnIndex, int flags);
-static Bool SISCloseScreen(int scrnIndex, ScreenPtr pScreen);
+static Bool SISScreenInit(SCREEN_INIT_ARGS_DECL);
+static Bool SISEnterVT(VT_FUNC_ARGS_DECL);
+static void SISLeaveVT(VT_FUNC_ARGS_DECL);
+static Bool SISCloseScreen(CLOSE_SCREEN_ARGS_DECL);
 static Bool SISSaveScreen(ScreenPtr pScreen, int mode);
 static Bool SISSwitchMode(int scrnIndex, DisplayModePtr mode, int flags);
 static void SISNewAdjustFrame(int scrnIndex, int x, int y, int flags);
 static Bool SISPMEvent(int scrnIndex, pmEvent event, Bool undo);/*APM-ACPI, adding by Ivans.*/
+
+static Bool SISSwitchMode(SWITCH_MODE_ARGS_DECL);
 
 #if XSERVER_LIBPCIACCESS
 static Bool SIS_pci_probe(DriverPtr driver, int entity_num, struct pci_device *device, intptr_t match_data);
@@ -791,8 +793,8 @@ static Bool SISHotkeySwitchMode(ScrnInfoPtr pScrn, Bool adjust);/*Resolution opt
 #ifdef SISDUALHEAD
 static Bool	SISSaveScreenDH(ScreenPtr pScreen, int mode);
 #endif
-static void     SISFreeScreen(int scrnIndex, int flags);
-static ModeStatus SISValidMode(int scrnIndex, DisplayModePtr mode,
+static void SISFreeScreen(FREE_SCREEN_ARGS_DECL);
+static ModeStatus SISValidMode(SCRN_ARG_TYPE arg, DisplayModePtr mode,
 				Bool verbose, int flags);
 #ifdef SIS_HAVE_RR_FUNC
 #ifdef SIS_HAVE_DRIVER_FUNC
@@ -811,7 +813,7 @@ static Bool SiS_GetModeMM(ScrnInfoPtr pScrn, DisplayModePtr mode, int virtX, int
 static Bool	SISMapIOPMem(ScrnInfoPtr pScrn);
 static Bool	SISUnmapIOPMem(ScrnInfoPtr pScrn);
 #endif
-void		SISAdjustFrame(int scrnIndex, int x, int y, int flags);
+void SISAdjustFrame(ADJUST_FRAME_ARGS_DECL);
 UChar		SISSearchCRT1Rate(ScrnInfoPtr pScrn, DisplayModePtr mode);
 UShort		SiS_CheckModeCRT1(ScrnInfoPtr pScrn, DisplayModePtr mode,
 				 unsigned int VBFlags, unsigned int VBFlags3, Bool hcm);
@@ -858,7 +860,7 @@ extern void 	SiSVGAUnmapMem(ScrnInfoPtr pScrn);
 extern Bool 	SiSVGASaveScreen(ScreenPtr pScreen, int mode);
 
 /* shadow, randr, randr-rotation */
-extern void 	SISPointerMoved(int index, int x, int y);
+extern void SISPointerMoved(SCRN_ARG_TYPE arg, int x, int y);
 extern void 	SISRefreshArea(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 extern void 	SISRefreshAreaReflect(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 extern void 	SISRefreshArea8(ScrnInfoPtr pScrn, int num, BoxPtr pbox);

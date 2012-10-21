@@ -31,6 +31,7 @@ sisimedia_drv_ladir = @moduledir@/drivers
 sisimedia_drv_la_SOURCES = \
 	300vtbl.h \
 	310vtbl.h \
+	compat-api.h \
 	init301.c \
 	init301.h \
 	init.c \

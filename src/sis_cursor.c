@@ -144,7 +144,7 @@ UpdateHWCursorStatus(SISPtr pSiS)
 static Bool
 SiSUseHWCursor(ScreenPtr pScreen, CursorPtr pCurs)
 {
-    ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+    ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     SISPtr pSiS = SISPTR(pScrn);
 
     /* TODO: Doublescan? Interlace? */
@@ -313,7 +313,7 @@ SiSLoadCursorImage(ScrnInfoPtr pScrn, UChar *src)
 static Bool
 SiSNewUseHWCursor(ScreenPtr pScreen, CursorPtr pCurs)
 {
-    ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+    ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     SISPtr pSiS = SISPTR(pScrn);
     int size = pCurs->bits->height;
 
@@ -339,7 +339,7 @@ SiSNewUseHWCursor(ScreenPtr pScreen, CursorPtr pCurs)
 static Bool
 SiSUseHWCursorARGB(ScreenPtr pScreen, CursorPtr pCurs)
 {
-    ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+    ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     SISPtr pSiS = SISPTR(pScrn);
     int size = pCurs->bits->height;
     int maxsize;
@@ -1249,7 +1249,7 @@ SiS310LoadCursorImageARGB(ScrnInfoPtr pScrn, CursorPtr pCurs)
 Bool
 SiSHWCursorInit(ScreenPtr pScreen)
 {
-    ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+    ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     SISPtr pSiS = SISPTR(pScrn);
     xf86CursorInfoPtr infoPtr;
 

@@ -135,7 +135,7 @@ extern pthread_mutex_t *CmdQ_Lock;
 static Bool
 SISInitVisualConfigs(ScreenPtr pScreen)
 {
-  ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+  ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
   SISPtr pSIS = SISPTR(pScrn);
   int numConfigs = 0;
   __GLXvisualConfig *pConfigs = 0;
@@ -271,7 +271,7 @@ SISInitVisualConfigs(ScreenPtr pScreen)
 Bool
 SISDRIScreenInit(ScreenPtr pScreen)
 {
-  ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+  ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
   SISPtr pSIS = SISPTR(pScrn);
   DRIInfoPtr pDRIInfo;
   SISDRIPtr pSISDRI;
@@ -735,7 +735,7 @@ SISDRIScreenInit(ScreenPtr pScreen)
 Bool
 SISDRIFinishScreenInit(ScreenPtr pScreen)
 {
-  ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+  ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
   SISPtr pSiS = SISPTR(pScrn);
   SISDRIPtr pSISDRI;
 
@@ -813,7 +813,7 @@ SISDRIFinishScreenInit(ScreenPtr pScreen)
 void
 SISDRICloseScreen(ScreenPtr pScreen)
 {
-  ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+  ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
   SISPtr pSIS = SISPTR(pScrn);
 
   switch(pSIS->VGAEngine) {
@@ -908,7 +908,7 @@ SISDRISwapContext(ScreenPtr pScreen, DRISyncType syncType,
            DRIContextType oldContextType, void *oldContext,
            DRIContextType newContextType, void *newContext)
 {
-  ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+  ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
   SISPtr pSiS = SISPTR(pScrn);
 
 #if 0
@@ -944,7 +944,7 @@ static void
 SISDRIInitBuffers(WindowPtr pWin, RegionPtr prgn, CARD32 index)
 {
   ScreenPtr pScreen = pWin->drawable.pScreen;
-  ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+  ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
   SISPtr pSiS = SISPTR(pScrn);
 
   switch(pSiS->VGAEngine) {
@@ -964,7 +964,7 @@ SISDRIMoveBuffers(WindowPtr pParent, DDXPointRec ptOldOrg,
            RegionPtr prgnSrc, CARD32 index)
 {
   ScreenPtr pScreen = pParent->drawable.pScreen;
-  ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+  ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
   SISPtr pSiS = SISPTR(pScrn);
 
   switch(pSiS->VGAEngine) {

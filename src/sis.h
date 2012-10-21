@@ -85,6 +85,8 @@
 #include "xf86_ansic.h"
 #endif
 
+#include "compat-api.h"
+
 #ifndef DEFAULT_DPI
 #define DEFAULT_DPI 96
 #endif
@@ -1311,7 +1313,7 @@ typedef struct {
     int			SiSDPIVX, SiSDPIVY;
     int			virtualX, virtualY;
     int			Rotate, Reflect;
-    void		(*PointerMoved)(int index, int x, int y);
+    void		(*PointerMoved)(SCRN_ARG_TYPE arg, int x, int y);
 
     /* ShadowFB support */
     Bool		ShadowFB;

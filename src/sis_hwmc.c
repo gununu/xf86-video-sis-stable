@@ -224,7 +224,7 @@ static XF86MCAdaptorPtr ppAdapt[1] =
  **************************************************************************/
 void SiSInitMC(ScreenPtr pScreen)
 {
-  ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+  ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
   SISPtr pSIS = SISPTR(pScrn);
   int i;
 

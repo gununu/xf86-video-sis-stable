@@ -1975,7 +1975,7 @@ SiSVGASaveScreen(ScreenPtr pScreen, int mode)
 
     if(pScreen == NULL) return FALSE;
 
-    pScrn = xf86Screens[pScreen->myNum];
+    pScrn = xf86ScreenToScrn(pScreen);
 
     if(pScrn->vtSema) {
        SISVGABlankScreen(pScrn, on);
