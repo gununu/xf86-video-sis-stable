@@ -66,7 +66,7 @@
 #endif
 #endif
 
-#if 1
+#ifdef HAVE_XAA_H
 #define SIS_USE_XAA		/* Include support for XAA */
 #endif
 

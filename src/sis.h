@@ -251,7 +251,7 @@
 #define SIS_MAX_SURFACES 6
 #define SIS_MAX_SUBPICTURES 2
 
-#if !defined(SIS_USE_XAA) && !defined(SIS_USE_EXA)
+#if !defined(SIS_USE_XAA) && !defined(SIS_USE_EXA) && defined(HAVE_XAA_H)
 #define SIS_USE_XAA
 #endif
 
