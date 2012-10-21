@@ -70,6 +70,8 @@
 #include "310vtbl.h"
 #endif
 
+#include "sis_dac.h"
+
 #if defined(ALLOC_PRAGMA)
 #pragma alloc_text(PAGE,SiSSetMode)
 #endif

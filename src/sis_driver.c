@@ -6798,7 +6798,7 @@ SISSave(ScrnInfoPtr pScrn)
 #ifdef SIS_PC_PLATFORM
        if(pSiS->VGAMemBase) {
           SiSRegInit(pSiS->SiS_Pr, pSiS->RelIO+0x30);
-          SiSSetLVDSetc(pSiS->SiS_Pr, 0);
+          SiSSetLVDSetc(pSiS->SiS_Pr);
           SiS_GetVBType(pSiS->SiS_Pr);
           SiS_DisableBridge(pSiS->SiS_Pr);
           SiSVGASave(pScrn, sisReg, SISVGA_SR_FONTS);
@@ -7182,7 +7182,7 @@ SISRestore(ScrnInfoPtr pScrn)
 
 	   if(flags & SISVGA_SR_FONTS) {
               SiSRegInit(pSiS->SiS_Pr, pSiS->RelIO+0x30);
-	      SiSSetLVDSetc(pSiS->SiS_Pr, 0);
+	      SiSSetLVDSetc(pSiS->SiS_Pr);
 	      SiS_GetVBType(pSiS->SiS_Pr);
 	      SiS_DisableBridge(pSiS->SiS_Pr);
 	      SiSVGAProtect(pScrn, TRUE);
