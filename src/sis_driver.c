@@ -105,6 +105,8 @@
 #include "sis_regs.h"
 #include "sis_dac.h"
 
+#include <vidmodeproc.h>
+
 #include "sis_driver.h"
 
 #include <X11/extensions/xf86dgaproto.h>
@@ -8786,7 +8788,7 @@ SISBlockHandler(BLOCKHANDLER_ARGS_DECL)
 #endif
 
     if(pSiS->AdjustFramePending && pSiS->AdjustFrame) {
-       (*pSiS->AdjustFrame)(ADJUST_FRAME_ARGS(arg, pSiS->AdjustFrameX, pSiS->AdjustFrameY));
+       (*pSiS->AdjustFrame)(ADJUST_FRAME_ARGS(pScrn, pSiS->AdjustFrameX, pSiS->AdjustFrameY));
        /* Reset it since Xv insists on installing its own every time. */
        pScrn->AdjustFrame = SISNewAdjustFrame;
        pSiS->AdjustFramePending = FALSE;

@@ -43,6 +43,8 @@
 
 #include "sis_videostr.h"
 
+#include "sis_vb.h"
+
 #ifdef TWDEBUG
 #define SIS_NEED_orSISIDXREG
 #include "sis_regs.h"

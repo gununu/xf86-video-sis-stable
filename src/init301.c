@@ -953,7 +953,7 @@ SiS_SetChrontelGPIO(struct SiS_Private *SiS_Pr, unsigned short myvbinfo)
 #ifdef SIS_LINUX_KERNEL
    acpibase = sisfb_read_lpc_pci_dword(SiS_Pr, 0x74);
 #else
-   acpibase = pciReadLong(0x00000800, 0x74);
+   acpibase = SIS_PCI_READ_LONG_PR(SiS_Pr, 0x74);
 #endif
    acpibase &= 0xFFFF;
    if(!acpibase) return;

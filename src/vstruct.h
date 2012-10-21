@@ -240,6 +240,9 @@ struct SiS_Private
 {
 	unsigned char			ChipType;
 	unsigned char			ChipRevision;
+#if defined(XSERVER_LIBPCIACCESS)
+	struct pci_device		*pdev;
+#endif
 #ifdef SIS_XORG_XF86
 	CARD32				PciTag;
 #endif

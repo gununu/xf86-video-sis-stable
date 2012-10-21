@@ -43,9 +43,8 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "xf86.h"
 #include "xf86_OSproc.h"
-#ifndef GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 6
-#include "xf86Resources.h"
-#endif
+
+
 #include "compiler.h"
 #include "sis_pci.h"
 #include "xf86Pci.h"

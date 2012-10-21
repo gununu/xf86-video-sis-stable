@@ -86,6 +86,8 @@
 #define TWDEBUG_VID
 #endif
 
+#include "shit.h"
+
 static void SiSSave(ScrnInfoPtr pScrn, SISRegPtr sisReg);
 static void SiSRestore(ScrnInfoPtr pScrn, SISRegPtr sisReg);
 static void SiS300Save(ScrnInfoPtr pScrn, SISRegPtr sisReg);
@@ -697,8 +699,8 @@ SiS300Restore(ScrnInfoPtr pScrn, SISRegPtr sisReg)
 	  temp2 &= 0x00ffffff;
           temp2 |= (sisReg->sisRegsPCIA0 & ~0x00ffffff);
        }
-       pciWriteLong(0x00000000, 0x50, temp1);
-       pciWriteLong(0x00000000, 0xA0, temp2);
+       SIS_PCI_WRITE_LONG(pSiS->PciInfo, 0x50, temp1);
+       SIS_PCI_WRITE_LONG(pSiS->PciInfo, 0xA0, temp2);
     }
 
     /* Restore panel link/video bridge registers */

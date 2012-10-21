@@ -64,6 +64,7 @@
 #define TWDEBUG    
 #endif
 
+#include <pthread.h>
 #include <stropts.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -71,9 +72,9 @@
 #include "xf86Pci.h"
 #include "xf86_OSproc.h"
 
-//#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 6
-//#include "xf86Resources.h"
-//#endif
+#include "sis_setup.h"
+
+#include "shit.h"
 
 #include "xf86.h"
 #include "sis_pci.h"

@@ -65,6 +65,7 @@ sisimedia_drv_la_SOURCES = \
 	sis_mergedfb.c \
 	sis_opt.c \
 	sis_regs.h \
+	sis_setup.h \
 	sis_setup.c \
 	sis_shadow.c \
 	sis_utility.c \
@@ -75,7 +76,9 @@ sisimedia_drv_la_SOURCES = \
 	sis_video.h \
 	sis_videostr.h \
 	vgatypes.h \
-	vstruct.h 
+	vstruct.h \
+	shit.c \
+        shit.h
 
 if DRI
 sisimedia_drv_la_SOURCES += \

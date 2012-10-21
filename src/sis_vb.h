@@ -44,6 +44,7 @@ void SiSPostSetModeTVParms(ScrnInfoPtr pScrn);
 extern Bool   SISDetermineLCDACap(ScrnInfoPtr pScrn);
 extern void   SISSaveDetectedDevices(ScrnInfoPtr pScrn);
 extern UChar  SiS_GetSetBIOSScratch(ScrnInfoPtr pScrn, UShort offset, UChar value);
+unsigned int SiS_DetectVGA1(ScrnInfoPtr pScrn);
 
 /* From init.c, init301.c ---- (use their data types) */
 extern BOOLEAN		SiS_GetPanelID(struct SiS_Private *SiS_Pr);

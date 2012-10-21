@@ -2633,7 +2633,7 @@ SiS_SetCRT1FIFO_630(struct SiS_Private *SiS_Pr, unsigned short ModeNo,
 #ifdef SIS_LINUX_KERNEL
    templ = sisfb_read_nbridge_pci_dword(SiS_Pr, 0x50);
 #else
-   templ = sis_pci_read_host_bridge_u32(0x50);
+   templ = sis_pci_read_device_u32(0, 0x50);
 #endif
 
    if(SiS_Pr->ChipType == SIS_730) {
@@ -2658,7 +2658,7 @@ SiS_SetCRT1FIFO_630(struct SiS_Private *SiS_Pr, unsigned short ModeNo,
    sisfb_write_nbridge_pci_dword(SiS_Pr, 0x50, templ);
    templ = sisfb_read_nbridge_pci_dword(SiS_Pr, 0xA0);
 #else
-   pciWriteLong(0x00000000, 0x50, templ);
+   SIS_PCI_WRITE_LONG_PR(SiS_Pr, 0x50, templ);
    templ = sis_pci_read_host_bridge_u32(0xA0);
 #endif
 
@@ -2679,7 +2679,7 @@ SiS_SetCRT1FIFO_630(struct SiS_Private *SiS_Pr, unsigned short ModeNo,
 #ifdef SIS_LINUX_KERNEL
    sisfb_write_nbridge_pci_dword(SiS_Pr, 0xA0, templ);
 #else
-   pciWriteLong(0x00000000, 0xA0, templ);
+   SIS_PCI_WRITE_LONG_PR(SiS_Pr, 0xA0, templ);
 #endif
 }
 #endif /* SIS300 */
@@ -3311,7 +3311,7 @@ SiS_Handle760(struct SiS_Private *SiS_Pr)
 #ifdef SIS_LINUX_KERNEL
    somebase = sisfb_read_mio_pci_word(SiS_Pr, 0x74);
 #else
-   somebase = pciReadWord(0x00001000, 0x74);
+   somebase = SIS_PCI_READ_WORD_PR(SiS_Pr, 0x74);
 #endif
    somebase &= 0xffff;
 
@@ -3332,8 +3332,8 @@ SiS_Handle760(struct SiS_Private *SiS_Pr)
    sisfb_write_nbridge_pci_byte(SiS_Pr, 0x7e, temp1);
    sisfb_write_nbridge_pci_byte(SiS_Pr, 0x8d, temp2);
 #else
-   pciWriteByte(0x00000000, 0x7e, temp1);
-   pciWriteByte(0x00000000, 0x8d, temp2);
+   SIS_PCI_WRITE_BYTE_PR(SiS_Pr, 0x7e, temp1);
+   SIS_PCI_WRITE_BYTE_PR(SiS_Pr, 0x8d, temp2);
 #endif
 
    SiS_SetRegByte((somebase + 0x85), temp3);

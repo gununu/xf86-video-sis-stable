@@ -83,6 +83,8 @@
 // XXX: ??
 #undef XF86_HAS_SCRN_CONV
 
+#define SIS_USE_EXA
+
 /* End of configurable stuff --------------------------------- */
 
 
