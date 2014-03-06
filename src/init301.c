@@ -8192,7 +8192,7 @@ SiS_SetGroup5(struct SiS_Private *SiS_Pr, unsigned short ModeNo, unsigned short 
 }
 
 // PCF*
-SiS_ModifyVB(struct SiS_Private *SiS_Pr)
+void SiS_ModifyVB(struct SiS_Private *SiS_Pr)
 {                  
  
 }
