@@ -107,7 +107,7 @@ static void 	SISQueryBestSize(ScrnInfoPtr, Bool, short, short, short,
 			short, unsigned int *,unsigned int *, pointer);
 static int 	SISPutImage(ScrnInfoPtr,
 			short, short, short, short, short, short, short, short,
-			int, UChar *, short, short, Bool, RegionPtr, pointer);
+			int, UChar *, short, short, Bool, RegionPtr, pointer, DrawablePtr);
 static int	SISReputImage(ScrnInfoPtr pScrn,
 			short drw_x, short drw_y,
 			RegionPtr clipBoxes, pointer data);
@@ -125,17 +125,17 @@ extern Bool     SiSBridgeIsInSlaveMode(ScrnInfoPtr pScrn);
 
 #ifdef INCL_YUV_BLIT_ADAPTOR
 static 		XF86VideoAdaptorPtr SISSetupBlitVideo(ScreenPtr);
-static void 	SISStopVideoBlit(ScrnInfoPtr, ULong, Bool);
-static int 	SISSetPortAttributeBlit(ScrnInfoPtr, Atom, INT32, ULong);
-static int 	SISGetPortAttributeBlit(ScrnInfoPtr, Atom ,INT32 *, ULong);
+static void 	SISStopVideoBlit(ScrnInfoPtr, pointer, Bool);
+static int 	SISSetPortAttributeBlit(ScrnInfoPtr, Atom, INT32, pointer);
+static int 	SISGetPortAttributeBlit(ScrnInfoPtr, Atom ,INT32 *, pointer);
 static void 	SISQueryBestSizeBlit(ScrnInfoPtr, Bool, short, short, short,
-			short, unsigned int *,unsigned int *, ULong);
+			short, unsigned int *,unsigned int *, pointer);
 static int 	SISPutImageBlit_671( ScrnInfoPtr,
 			short, short, short, short, short, short, short, short,
-			int, UChar *, short, short, Bool, RegionPtr, ULong);
+			int, UChar *, short, short, Bool, RegionPtr, pointer, DrawablePtr);
 static int 	SISPutImageBlit( ScrnInfoPtr,
 			short, short, short, short, short, short, short, short,
-			int, UChar *, short, short, Bool, RegionPtr, ULong);
+			int, UChar *, short, short, Bool, RegionPtr, pointer, DrawablePtr);
 static int 	SISQueryImageAttributesBlit(ScrnInfoPtr,
 			int, UShort *, UShort *, int *, int *);
 extern void     SISWriteBlitPacket(SISPtr pSiS, CARD32 *packet);

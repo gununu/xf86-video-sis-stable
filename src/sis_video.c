@@ -3948,7 +3948,7 @@ SISPutImage(
   int id, UChar *buf,
   short width, short height,
   Bool sync,
-  RegionPtr clipBoxes, pointer data
+  RegionPtr clipBoxes, pointer data, DrawablePtr dp
 ){
    SISPtr pSiS = SISPTR(pScrn);
    SISPortPrivPtr pPriv = (SISPortPrivPtr)data;
@@ -4591,13 +4591,13 @@ SISSetupBlitVideo(ScreenPtr pScreen)
    adapt->PutStill = NULL;
    adapt->GetVideo = NULL;
    adapt->GetStill = NULL;
-   adapt->StopVideo = (StopVideoFuncPtr)SISStopVideoBlit;
-   adapt->SetPortAttribute = (SetPortAttributeFuncPtr)SISSetPortAttributeBlit;
-   adapt->GetPortAttribute = (GetPortAttributeFuncPtr)SISGetPortAttributeBlit;
-   adapt->QueryBestSize = (QueryBestSizeFuncPtr)SISQueryBestSizeBlit;
+   adapt->StopVideo = SISStopVideoBlit;
+   adapt->SetPortAttribute = SISSetPortAttributeBlit;
+   adapt->GetPortAttribute = SISGetPortAttributeBlit;
+   adapt->QueryBestSize = SISQueryBestSizeBlit;
    /* because SIS671 has no sctretch engine, we use old bliter function */ 
-   adapt->PutImage = (pSiS->ChipType == SIS_671) ? (PutImageFuncPtr)SISPutImageBlit_671 : 
-   	(PutImageFuncPtr)SISPutImageBlit; 
+   adapt->PutImage = (pSiS->ChipType == SIS_671) ? SISPutImageBlit_671 : 
+   	SISPutImageBlit; 
    adapt->QueryImageAttributes = SISQueryImageAttributesBlit;
 
    pSiS->blitadaptor = adapt;
@@ -4617,7 +4617,7 @@ SISSetupBlitVideo(ScreenPtr pScreen)
 
 static int
 SISGetPortAttributeBlit(ScrnInfoPtr pScrn, Atom attribute,
-  			INT32 *value, ULong index)
+  			INT32 *value, pointer index)
 {
 #if 0
    SISPtr pSiS = SISPTR(pScrn);
@@ -4633,7 +4633,7 @@ SISGetPortAttributeBlit(ScrnInfoPtr pScrn, Atom attribute,
 
 static int
 SISSetPortAttributeBlit(ScrnInfoPtr pScrn, Atom attribute,
-  		    	INT32 value, ULong index)
+  		    	INT32 value, pointer index)
 {
    SISPtr pSiS = SISPTR(pScrn);
    SISBPortPrivPtr pPriv = (SISBPortPrivPtr)(pSiS->blitPriv);
@@ -4651,10 +4651,11 @@ SISSetPortAttributeBlit(ScrnInfoPtr pScrn, Atom attribute,
 }
 
 static void
-SISStopVideoBlit(ScrnInfoPtr pScrn, ULong index, Bool shutdown)
+SISStopVideoBlit(ScrnInfoPtr pScrn, pointer data, Bool shutdown)
 {
    SISPtr pSiS = SISPTR(pScrn);
    SISBPortPrivPtr pPriv = (SISBPortPrivPtr)(pSiS->blitPriv);
+   ULong index = (ULong)data;
 
    /* This shouldn't be called for blitter adaptors due to
     * adapt->flags but we provide it anyway.
@@ -4683,10 +4684,11 @@ SISPutImageBlit_671(
   int id, UChar *buf,
   short width, short height,
   Bool sync,
-  RegionPtr clipBoxes, ULong index
+  RegionPtr clipBoxes, pointer data, DrawablePtr dp
 ){
    SISPtr pSiS = SISPTR(pScrn);
    SISBPortPrivPtr pPriv = (SISBPortPrivPtr)(pSiS->blitPriv);
+   ULong index = (ULong)data;
    BoxPtr pbox = REGION_RECTS(clipBoxes);
    int    nbox = REGION_NUM_RECTS(clipBoxes);
    CARD32 bufInFbOffs, dstbase = 0, offsety, offsetuv, temp;
@@ -4946,10 +4948,11 @@ SISPutImageBlit(
   int id, UChar *buf,
   short width, short height,
   Bool sync,
-  RegionPtr clipBoxes, ULong index
+  RegionPtr clipBoxes, pointer data, DrawablePtr dp
 ){
    SISPtr pSiS = SISPTR(pScrn);
    SISBPortPrivPtr pPriv = (SISBPortPrivPtr)(pSiS->blitPriv);
+   ULong index = (ULong)data;
    BoxPtr pbox = REGION_RECTS(clipBoxes);
    int    nbox = REGION_NUM_RECTS(clipBoxes);
    CARD32 bufInFbOffs, dstbase = 0, offsety, offsetuv, temp;
@@ -5298,7 +5301,7 @@ SISQueryBestSizeBlit(
   short vid_w, short vid_h,
   short drw_w, short drw_h,
   unsigned int *p_w, unsigned int *p_h,
-  ULong index
+  pointer index
 ){
   *p_w = drw_w;
   *p_h = drw_h;
