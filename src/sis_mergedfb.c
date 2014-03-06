@@ -568,7 +568,7 @@ SiSMetaModeParseError(ScrnInfoPtr pScrn, char *src, char *curr, char *lastcurr, 
        char backup = *curr;
        *curr = 0;
        xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
-		"Error parsing Metamodes at character no %d (near or in \"%s\")\n",
+		"Error parsing Metamodes at character no %td (near or in \"%s\")\n",
 		curr - src,
 		lastcurr);
        *curr = backup;
