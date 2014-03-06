@@ -8032,7 +8032,7 @@ SiSPostSetMode(ScrnInfoPtr pScrn, SISRegPtr sisReg)
 			NoOverlay ? "no" : ((pSiS->MiscFlags & MISC_SIS760ONEOVERLAY) ? "one" : "two"));
 
 #ifdef TWDEBUG
-	       xf86DrvMsg(0, 0, "SiS760: Memclock %d, c1 %d/%d c2 %d/%d, sum %d / %x\n",
+	       xf86DrvMsg(0, 0, "SiS760: Memclock %d, c1 %d/%d c2 %d/%d, sum %d / %lx\n",
 			pSiS->MemClock, myclock1, mycoldepth1,
 			myclock2, mycoldepth2, dotclocksum, pSiS->SiS_SD2_Flags);
 #endif
@@ -8702,7 +8702,7 @@ SISModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 #endif
 	     SiSPostSetMode(pScrn, &pSiS->ModeReg);
 #ifdef TWDEBUG
-	     xf86DrvMsg(pScrn->scrnIndex, X_INFO, "VBFlags %lx\n", pSiS->VBFlags);
+	     xf86DrvMsg(pScrn->scrnIndex, X_INFO, "VBFlags %x\n", pSiS->VBFlags);
 	     xf86DrvMsg(pScrn->scrnIndex, X_INFO,
 			"REAL REGISTER CONTENTS AFTER SETMODE:\n");
              (*pSiS->ModeInit)(pScrn, mode);
@@ -10139,7 +10139,7 @@ SiS_CheckModeCRT2(ScrnInfoPtr pScrn, DisplayModePtr mode, unsigned int VBFlags,
    int    j;
 
 #ifdef TWDEBUG
-   xf86DrvMsg(0, X_INFO, "Inside CheckCalcModeIndex (VBFlags %lx, mode %dx%d)\n",
+   xf86DrvMsg(0, X_INFO, "Inside CheckCalcModeIndex (VBFlags %x, mode %dx%d)\n",
 	VBFlags,mode->HDisplay, mode->VDisplay);
 #endif
 
