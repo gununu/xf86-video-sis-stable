@@ -925,8 +925,8 @@ extern void		SiSMFBCorrectVirtualAndLayout(ScrnInfoPtr pScrn);
 extern Bool		SiSMFBRebuildModelist(ScrnInfoPtr pScrn, ClockRangePtr clockRanges);
 extern Bool		SiSMFBRevalidateModelist(ScrnInfoPtr pScrn, ClockRangePtr clockRanges);
 extern void		SiSMFBSetDpi(ScrnInfoPtr pScrn1, ScrnInfoPtr pScrn2, SiSScrn2Rel srel);
-extern void		SISMFBPointerMoved(int scrnIndex, int x, int y);
-extern void		SISMFBAdjustFrame(int scrnIndex, int x, int y, int flags);
+extern void		SISMFBPointerMoved(SCRN_ARG_TYPE scrnIndex, int x, int y);
+extern void		SISMFBAdjustFrame(SCRN_ARG_TYPE scrnIndex, int x, int y, int flags);
 #ifdef SISXINERAMA
 extern void		SiSXineramaExtensionInit(ScrnInfoPtr pScrn);
 extern Bool 		SiSnoPanoramiXExtension;

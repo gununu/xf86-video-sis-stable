@@ -10956,6 +10956,7 @@ SiS_GetSetBIOSScratch(ScrnInfoPtr pScrn, UShort offset, UChar value)
 {
     UChar ret = 0;
 #ifdef SIS_USE_BIOS_SCRATCH
+    void *addr;
     UChar *base;
 #endif
 
@@ -10983,7 +10984,8 @@ SiS_GetSetBIOSScratch(ScrnInfoPtr pScrn, UShort offset, UChar value)
     if(SISPTR(pScrn)->Primary) {
 
 #if XSERVER_LIBPCIACCESS
-       (void) pci_device_map_legacy(SISPTR(pScrn)->PciInfo, 0, 0x2000, 1, &base); // HA HA HA MAGIC NUMBER
+       (void) pci_device_map_legacy(SISPTR(pScrn)->PciInfo, 0, 0x2000, 1, &addr); // HA HA HA MAGIC NUMBER
+       base = addr; 
 #else
        base = xf86MapVidMem(pScrn->scrnIndex, VIDMEM_MMIO, 0, 0x2000);
 #endif
