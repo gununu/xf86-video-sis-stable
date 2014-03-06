@@ -1434,7 +1434,7 @@ SiSUploadToScreen(PixmapPtr pDst, int x, int y, int w, int h, char *src, int src
 {
 	ScrnInfoPtr pScrn = xf86ScreenToScrn(pDst->drawable.pScreen);
 	SISPtr pSiS = SISPTR(pScrn);
-	unsigned char *dst = pDst->devPrivate.ptr;
+	unsigned char *dst = (unsigned char*)pSiS->FbBase + exaGetPixmapOffset(pDst);
 	int dst_pitch = exaGetPixmapPitch(pDst);
 
 	(pSiS->SyncAccel)(pScrn);
@@ -1442,10 +1442,10 @@ SiSUploadToScreen(PixmapPtr pDst, int x, int y, int w, int h, char *src, int src
 	if(pDst->drawable.bitsPerPixel < 8)
 	   return FALSE;
 
-	dst += (x * pDst->drawable.bitsPerPixel / 8) + (y * src_pitch);
+	dst += (x * pDst->drawable.bitsPerPixel / 8) + (y * dst_pitch);
+        int size = (w * pDst->drawable.bitsPerPixel / 8);
 	while(h--) {
-	   SiSMemCopyToVideoRam(pSiS, dst, (unsigned char *)src,
-				(w * pDst->drawable.bitsPerPixel / 8));
+	   SiSMemCopyToVideoRam(pSiS, dst, (unsigned char *)src, size);
 	   src += src_pitch;
 	   dst += dst_pitch;
 	}
@@ -1546,9 +1546,8 @@ SiSDownloadFromScreen(PixmapPtr pSrc, int x, int y, int w, int h, char *dst, int
 {
 	ScrnInfoPtr pScrn = xf86ScreenToScrn(pSrc->drawable.pScreen);
 	SISPtr pSiS = SISPTR(pScrn);
-	unsigned char *src = pSrc->devPrivate.ptr;
+	unsigned char *src = (unsigned char*)pSiS->FbBase + exaGetPixmapOffset(pSrc);
 	int src_pitch = exaGetPixmapPitch(pSrc);
-	int size = src_pitch < dst_pitch ? src_pitch : dst_pitch;
 
 	(pSiS->SyncAccel)(pScrn);
 
@@ -1556,6 +1555,7 @@ SiSDownloadFromScreen(PixmapPtr pSrc, int x, int y, int w, int h, char *dst, int
 	   return FALSE;
 
 	src += (x * pSrc->drawable.bitsPerPixel / 8) + (y * src_pitch);
+        int size = (w * pSrc->drawable.bitsPerPixel / 8);
 	while(h--) {
 	   SiSMemCopyFromVideoRam(pSiS, (unsigned char *)dst, src, size);
 	   src += src_pitch;
