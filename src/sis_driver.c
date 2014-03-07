@@ -154,8 +154,24 @@ static int pix24bpp = 0;
     {PCI_VENDOR_SIS, (d), PCI_MATCH_ANY, PCI_MATCH_ANY, 0, 0, (i) }
 
 static const struct pci_id_match SIS_device_match[] = {
-	SIS_DEVICE_MATCH (PCI_CHIP_SIS670, 0),
-	SIS_DEVICE_MATCH (PCI_CHIP_SIS671, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS5597,0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS530, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS6326,0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS300, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS630, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS540, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS315, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS315H,0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS315PRO, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS550, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS650, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS660, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS330, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS340, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS670, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_SIS671, 0),
+    SIS_DEVICE_MATCH (PCI_CHIP_XGIXG20,0), 
+    SIS_DEVICE_MATCH (PCI_CHIP_XGIXG40,0),
 	{0, 0, 0 },
 	};
 #endif
@@ -198,8 +214,8 @@ static SymTabRec SISChipsets[] = {
     { PCI_CHIP_SIS315PRO,   "SIS315PRO/E" },
     { PCI_CHIP_SIS550,	    "SIS550" },
     { PCI_CHIP_SIS650,      "SIS650/M650/651/740" },
-    { PCI_CHIP_SIS330,      "SIS330(Xabre)" },
     { PCI_CHIP_SIS660,      "SIS[M]661[F|M]X/[M]741[GX]/[M]760[GX]/[M]761[GX]/662" },
+    { PCI_CHIP_SIS330,      "SIS330(Xabre)" },
     { PCI_CHIP_SIS340,      "SIS340" },
     { PCI_CHIP_SIS670,      "[M]670/[M]770[GX]" },   
     { PCI_CHIP_SIS671,      "[M]671/[M]771[GX]" },
@@ -213,13 +229,13 @@ static PciChipsets SISPciChipsets[] = {
     { PCI_CHIP_SIS300,      PCI_CHIP_SIS300,    RES_SHARED_VGA },
     { PCI_CHIP_SIS630,      PCI_CHIP_SIS630,    RES_SHARED_VGA },
     { PCI_CHIP_SIS540,      PCI_CHIP_SIS540,    RES_SHARED_VGA },
-    { PCI_CHIP_SIS550,      PCI_CHIP_SIS550,    RES_SHARED_VGA },
     { PCI_CHIP_SIS315,      PCI_CHIP_SIS315,    RES_SHARED_VGA },
     { PCI_CHIP_SIS315H,     PCI_CHIP_SIS315H,   RES_SHARED_VGA },
     { PCI_CHIP_SIS315PRO,   PCI_CHIP_SIS315PRO, RES_SHARED_VGA },
+    { PCI_CHIP_SIS550,      PCI_CHIP_SIS550,    RES_SHARED_VGA },
     { PCI_CHIP_SIS650,      PCI_CHIP_SIS650,    RES_SHARED_VGA },
-    { PCI_CHIP_SIS330,      PCI_CHIP_SIS330,    RES_SHARED_VGA },
     { PCI_CHIP_SIS660,      PCI_CHIP_SIS660,    RES_SHARED_VGA },
+    { PCI_CHIP_SIS330,      PCI_CHIP_SIS330,    RES_SHARED_VGA },
     { PCI_CHIP_SIS340,      PCI_CHIP_SIS340,    RES_SHARED_VGA },
     { PCI_CHIP_SIS670,      PCI_CHIP_SIS670,    RES_SHARED_VGA },
     { PCI_CHIP_SIS671,      PCI_CHIP_SIS671,    RES_SHARED_VGA },
@@ -362,11 +378,9 @@ xf86DrvMsg(0, X_INFO, "                       device_id=0x%x\n", device->device_
 xf86DrvMsg(0, X_INFO, "                       bus=%d\n", device->bus);
 xf86DrvMsg(0, X_INFO, "                       dev=%d\n", device->dev);
 xf86DrvMsg(0, X_INFO, "                       func=%d\n", device->func);
-    pScrn = NULL;
-    if((pScrn = xf86ConfigPciEntity(pScrn, 0,
-			entity_num,
-			SISPciChipsets,
-			NULL, NULL, NULL, NULL, NULL))) {
+    pScrn = xf86ConfigPciEntity(pScrn, 0, entity_num, SISPciChipsets, NULL, NULL, NULL, NULL, NULL);
+    if(!pScrn) pScrn = xf86ConfigPciEntity(pScrn, 0, entity_num, XGIPciChipsets, NULL, NULL, NULL, NULL, NULL);
+    if(pScrn) {
 	    xf86DrvMsg(0, X_INFO, "SIS_pci_probe - ConfigPciEntity found\n");
 	    /* Fill in what we can of the ScrnInfoRec */
 	    pScrn->driverVersion    = SIS_CURRENT_VERSION;
@@ -391,10 +405,10 @@ xf86DrvMsg(0, X_INFO, "SIS_pci_probe - GetEntityInfo chipset is 0x%x\n",pEnt->ch
 	case PCI_CHIP_SIS300:
 	case PCI_CHIP_SIS540:
 	case PCI_CHIP_SIS630:
-	case PCI_CHIP_SIS550:
 	case PCI_CHIP_SIS315:
 	case PCI_CHIP_SIS315H:
 	case PCI_CHIP_SIS315PRO:
+	case PCI_CHIP_SIS550:
 	case PCI_CHIP_SIS650:
 	case PCI_CHIP_SIS330:
 	case PCI_CHIP_SIS660:
@@ -402,6 +416,11 @@ xf86DrvMsg(0, X_INFO, "SIS_pci_probe - GetEntityInfo chipset is 0x%x\n",pEnt->ch
 	case PCI_CHIP_SIS670:
 	case PCI_CHIP_SIS671:
 	case PCI_CHIP_XGIXG40:
+
+    case PCI_CHIP_SIS5597:
+    case PCI_CHIP_SIS530:
+    case PCI_CHIP_SIS6326:
+	case PCI_CHIP_XGIXG20:
 	    {
 	       SISEntPtr pSiSEnt = NULL;
 	       DevUnion  *pPriv;
@@ -570,6 +589,11 @@ xf86DrvMsg(0, X_INFO, "SISProbe - test2\n");
 	case PCI_CHIP_SIS670:
 	case PCI_CHIP_SIS671:
 	case PCI_CHIP_XGIXG40:
+
+    case PCI_CHIP_SIS5597:
+    case PCI_CHIP_SIS530:
+    case PCI_CHIP_SIS6326:
+	case PCI_CHIP_XGIXG20:
 	    {
 	       SISEntPtr pSiSEnt = NULL;
 	       DevUnion  *pPriv;
