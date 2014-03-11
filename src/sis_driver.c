@@ -190,13 +190,13 @@ DriverRec SIS = {
 #endif
     SISAvailableOptions,
     NULL,
-    0
+    0,
 #ifdef SIS_HAVE_DRIVER_FUNC
-     ,
-    SISDriverFunc
+    SISDriverFunc,
+#else
+	NULL,
 #endif
 #if XSERVER_LIBPCIACCESS
-    ,
     SIS_device_match,
     SIS_pci_probe
 #endif
