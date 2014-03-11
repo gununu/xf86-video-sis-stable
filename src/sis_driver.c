@@ -367,7 +367,7 @@ SISDriverFunc(ScrnInfoPtr pScrn, SISDRIVERFUNCOPTYPE op, SISDRIVERFUNCPTRTYPE pt
 /****************************************************/
 static Bool SIS_pci_probe (DriverPtr driver, int entity_num, struct pci_device *device, intptr_t match_data)
 {
-    ScrnInfoPtr pScrn;
+    ScrnInfoPtr pScrn = NULL;
 #ifdef SISDUALHEAD
     EntityInfoPtr pEnt;
     Bool    foundScreen = FALSE;
