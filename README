@@ -80,44 +80,44 @@
 
 
 
-     Option
+     Option "SWCursor" [boolean]
         >
 
-     Option
+     Option "HWCursor" [boolean]
         These options select whether the software (SW) or hardware (HW)
         cursor should be used. The default is using the hardware cursor.
 
-     Option
+     Option "NoAccel" [boolean]
         Disables 2D acceleration. By default, 2D acceleration is
         enabled.
 
-     Option
+     Option "AccelMethod" [string]
         Determines which acceleration architecture should be used.
         Possible arguments are "XAA" or "EXA". As of this writing, EXA
         is still experimental and it is not recommended to be used on
         production machines. By default, XAA will be used.
 
-     Option
+     Option "Rotate" [string]
         This option enables clockwise ("CW") or counter-clockwise
         ("CCW") rotation of the display. Enabling either CW or CCW
         rotation disables the RandR extension as well as all 2D
         acceleration and Xv support. Default: no rotation.
 
-     Option
+     Option "Reflect" [string]
         This option enables reflecting the display horizontally ("X"),
         vertically ("Y") or in both directions ("XY"). Enabling
         reflection disables the RandR extension as well as all 2D
         acceleration and Xv support. Default: no rotation.
 
-     Option
+     Option "ShadowFB" [boolean]
         This option enables the shadow framebuffer layer. By default, it
         is disabled.
 
-     Option
+     Option "NoXVideo" [boolean]
         Disables the XVideo (Xv) support. Apart from the XGI Volari Z7,
         all chipsets support Xv. By default, XVideo support is enabled.
 
-     Option
+     Option "CRT1Gamma" [boolean]
         Enables or disables gamma correction. Default: gamma correction
         is enabled.
 
@@ -126,17 +126,17 @@
 
 
 
-     Option
+     Option "FastVram" [boolean]
         Enables 1 cycle memory access for read and write operations. The
         default depends on the chipset used.
 
-     Option
+     Option "Turboqueue" [boolean]
         SiS chipsets have the ability to extend the engine command queue
         in video RAM. This concept is called "TurboQueue" and gives some
         performance improvement. Due to hardware bugs, the TurboQueue is
         disabled on the 530/620, otherwise enabled by default.
 
-     Option
+     Option "NoHostBus" [boolean]
         For 5597/5598 only. This option, if set, disables the CPU to VGA
         host bus.  Disabling the host bus will result in a severe
         performance regression.
@@ -152,13 +152,13 @@
         all other chipsets, this keyword is ignored. The size argument
         is expected in KB, but without "KB".
 
-     Option
+     Option "NoYV12" [boolean]
         Due to hardware bugs, XVideo may display a corrupt image when
         using YV12 encoded material. This option, if set, disables
         support for YV12 and hence forces the Xv-aware application to
         use either YUV2 or XShm for video output.
 
-     Option
+     Option "TVStandard" [string]
         (6326 only) Selects the TV output standard. May be PAL or NTSC.
         By default, this is selected by a jumper on the card.
 
@@ -167,26 +167,26 @@
 
 
 
-     Option
+     Option "EnableSiSCtrl" [boolean]
         This option enables/disables the driver's interface for the
         SiSCtrl utility. Please see
         http://www.winischhofer.at/linuxsisvga.shtml for more
         information.
 
-     Option
+     Option "Turboqueue" [boolean]
         (300 series only) SiS chipsets have the ability to extend the
         engine command queue in video RAM. This concept is called
         "TurboQueue" and gives some performance improvement. The
         TurboQueue is enabled by default.
 
-     Option
+     Option "ForceCRT1" [boolean]
         Enables or disables CRT1 (= the external VGA monitor). By
         default, the driver will use CRT1 if a monitor is detected
         during server start. Some older monitors can't be detected, so
         they may require setting this option to true. To disable CRT1
         output, set this option to false.
 
-     Option
+     Option "ForceCRT1Type" [string]
         (For SiS 650, M650, 651, 661, 741, 760 with either SiS 301LV,
         302LV or SiS 301C video bridge only) The argument may be "VGA",
         "LCD" or "OFF".  Specifying LCD will force the driver to use the
@@ -194,7 +194,7 @@
         free for TV usage. "OFF" is the same as setting the option
         ForceCRT1 to "false". Default is VGA.
 
-     Option
+     Option "ForceCRT2Type" [string]
         Selects the CRT2 output device type. Valid parameters are "LCD",
         "TV", "SVIDEO", "COMPOSITE", "SVIDEO+COMPOSITE", "SCART", "VGA",
         "YPBPR480I", "YPBPR480P", "YPBPR720P", "YPBPR1080I" or "NONE".
@@ -205,42 +205,42 @@
         secondary VGA and is only available on some SiS video bridges
         (301, 301B, 301C).
 
-     Option
+     Option "CRT2Gamma" [boolean]
         (For SiS video bridges only) This option enables or disables
         gamma correction for CRT2. Default: gamma correction for CRT2 is
         enabled.
 
-     Option
+     Option "DRI" [boolean]
         Although this option is accepted for all chipsets, it currently
         only makes sense on the 300 series; DRI is only supported on
         these chipsets.  This option enables/disables DRI.
 
-     Option
+     Option "TVStandard" [string]
         Selects the TV output standard. May be PAL or NTSC, on some
         machines (depending on the hardware) also PALM and PALN.
         Default: BIOS setting.
 
-     Option
+     Option "TVXPosOffset" [integer]
         >
 
-     Option
+     Option "TVYPosOffset" [integer]
         These options allow relocating the image on your TV. Both
         options take an integer within the range of -16 to 16. Default:
         0. Not supported for Chrontel 7019.
 
-     Option
+     Option "CHTVOverscan" [boolean]
         (For Chrontel TV encoders only) Selects whether TV output should
         be overscan or underscan.
 
-     Option
+     Option "CHTVSuperOverscan" [boolean]
         (For Chrontel 7005 TV encoders in PAL mode only) Selects whether
         TV output should be super-overscan (slightly larger than the
         viewable area) or not.
 
-     Option
+     Option "SISTVXScale" [integer]
         >
 
-     Option
+     Option "SISTVYScale" [integer]
         (For SiS video bridges only) These options allow zooming the
         image on your TV. SISTVXScale takes an integer within the range
         of -16 to 16.  SISTVYScale accepts -4 to 3. Default: 0. Not all
@@ -251,7 +251,7 @@
 
 
 
-     Option
+     Option "MaxXFBMem" [size]
         This option might only be needed if you are running X on a Linux
         2.4 series kernel. This option is not needed and should be
         omitted on Linux 2.6 and *BSD.
@@ -295,13 +295,13 @@
 
 
 
-     Option
+     Option "RenderAcceleration" [boolean]
         Enables or disables RENDER acceleration. This feature, for
         instance, accelerates output of anti-aliased text. By default,
         RENDER acceleration is enabled. RENDER acceleration is currently
         only supported for XAA, not EXA.
 
-     Option
+     Option "XvOnCRT2" [boolean]
         (For 315, 650, 740, 330, 340 and XGI chips only) This option
         selects whether the XVideo (Xv) overlay should be displayed on
         CRT1 or CRT2. Setting this option means CRT2. The other CRT will
