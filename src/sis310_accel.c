@@ -1819,8 +1819,8 @@ SiS315AccelInit(ScreenPtr pScreen)
 #endif
 
 	      /* Upload, download to/from Screen */
-	      pSiS->EXADriverPtr->accel.UploadToScreen = SiSUploadToScreen;
-	      pSiS->EXADriverPtr->accel.DownloadFromScreen = SiSDownloadFromScreen;
+	      //pSiS->EXADriverPtr->accel.UploadToScreen = SiSUploadToScreen;
+	      //pSiS->EXADriverPtr->accel.DownloadFromScreen = SiSDownloadFromScreen;
 
 #else /*Xorg>= 7.0*/
 
@@ -1869,8 +1869,8 @@ SiS315AccelInit(ScreenPtr pScreen)
 #endif
 
 	      /* Upload, download to/from Screen */
-	      pSiS->EXADriverPtr->UploadToScreen = SiSUploadToScreen;
-	      pSiS->EXADriverPtr->DownloadFromScreen = SiSDownloadFromScreen;
+	      //pSiS->EXADriverPtr->UploadToScreen = SiSUploadToScreen;
+	      //pSiS->EXADriverPtr->DownloadFromScreen = SiSDownloadFromScreen;
 #endif /*end of Xorg>=7.0*/ 
 	   
 	   }
@@ -1956,7 +1956,7 @@ SiS315AccelInit(ScreenPtr pScreen)
         //#if  XORG_VERSION_CURRENT <= XORG_VERSION_NUMERIC(7,0,0,0,0)
 	//	 pSiS->EXADriverPtr->accel.UploadToScratch = SiSUploadToScratch;
 	//#else
-                 pSiS->EXADriverPtr->UploadToScratch = SiSUploadToScratch;
+                 //pSiS->EXADriverPtr->UploadToScratch = SiSUploadToScratch;
         //#endif
                }
 
