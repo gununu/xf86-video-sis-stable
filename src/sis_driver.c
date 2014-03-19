@@ -10199,12 +10199,12 @@ SiS_CheckModeCRT2(ScrnInfoPtr pScrn, DisplayModePtr mode, unsigned int VBFlags,
       if( ((mode->HDisplay <= pSiS->LCDwidth) &&
            (mode->VDisplay <= pSiS->LCDheight)) ||
 	  ((pSiS->SiS_Pr->SiS_CustomT == CUT_PANEL848) &&
-	   (((mode->HDisplay == 1360) && (mode->HDisplay == 768)) ||
-	    ((mode->HDisplay == 1024) && (mode->HDisplay == 768)) ||
-	    ((mode->HDisplay ==  800) && (mode->HDisplay == 600)))) ||
+	   (((mode->HDisplay == 1360) && (mode->VDisplay == 768)) ||
+	    ((mode->HDisplay == 1024) && (mode->VDisplay == 768)) ||
+	    ((mode->HDisplay ==  800) && (mode->VDisplay == 600)))) ||
 	  ((pSiS->SiS_Pr->SiS_CustomT == CUT_PANEL856) &&
-	   (((mode->HDisplay == 1024) && (mode->HDisplay == 768)) ||
-	    ((mode->HDisplay ==  800) && (mode->HDisplay == 600)))) ||
+	   (((mode->HDisplay == 1024) && (mode->VDisplay == 768)) ||
+	    ((mode->HDisplay ==  800) && (mode->VDisplay == 600)))) ||
 	   ((pSiS->EnablePanel_1366x768)&&(pSiS->LCDwidth==1366)&&(mode->HDisplay==1368))) {/*let 1366x768 mode valid. Ivans@090109*/
 
 	 ModeIndex = SiS_GetModeID_LCD(pSiS->VGAEngine, VBFlags, mode->HDisplay, mode->VDisplay, i,
