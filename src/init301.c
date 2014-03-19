@@ -9849,6 +9849,10 @@ SiS_ReadDDC(struct SiS_Private *SiS_Pr, unsigned short DDCdatatype, unsigned cha
       buffer[i] = (unsigned char)SiS_ReadDDC2Data(SiS_Pr);
       chksum += buffer[i];
       SiS_SendACK(SiS_Pr, 1);
+      if (buffer[126] > 0) {
+          xf86Msg(X_INFO, "EDID number of extensions:%d, but ignored\n", (int)buffer[126]);
+          buffer[126] = 0;
+      }
       if(gotcha) flag = (unsigned short)chksum;
       else flag = 0xFFFF;
    } else {
