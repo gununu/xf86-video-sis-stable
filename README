@@ -1,0 +1,25 @@
+// Build & Install
+sudo apt-get install xorg-dev xutils-dev mesa-common-dev libdrm-dev libtool 
+aclocal
+autoheader
+libtoolize
+automake --add-missing
+autoconf
+./configure --prefix=/usr --disable-static
+make
+sudo make install
+
+// Config xorg.conf
+sudo nano /etc/X11/xorg.conf
+
+// merge following text and save(Ctrl+o Enter) exit(Ctrl+x)
+Section "Device"
+   Identifier "XXXX"
+   Driver "sisimedia"
+EndSection
+
+Section "Screen"
+   Identifier "YYYY"
+   Device "XXXX"
+EndSection
+
