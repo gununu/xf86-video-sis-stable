@@ -715,7 +715,7 @@ SISResetVideo(ScrnInfoPtr pScrn)
     pPriv->mustresettap2 = TRUE;
 #endif
 
-    sis_print_registers(pSiS);
+    //sis_print_registers(pSiS);
 }
 
 
