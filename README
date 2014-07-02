@@ -1,10 +1,6 @@
 // Build & Install
 sudo apt-get install xorg-dev xutils-dev mesa-common-dev libdrm-dev libtool 
-aclocal
-autoheader
-libtoolize
-automake --add-missing
-autoconf
+autoreconf -i
 ./configure --prefix=/usr --disable-static
 make
 sudo make install
