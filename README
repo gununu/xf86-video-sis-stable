@@ -1,5 +1,5 @@
 // Build & Install
-sudo apt-get install xorg-dev xutils-dev mesa-common-dev libdrm-dev libtool 
+sudo apt-get install autoconf automake xorg-dev xutils-dev mesa-common-dev libdrm-dev libtool 
 autoreconf -i
 ./configure --prefix=/usr --disable-static
 make
