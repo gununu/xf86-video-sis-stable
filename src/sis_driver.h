@@ -788,7 +788,6 @@ static Bool SIS_pci_probe(DriverPtr driver, int entity_num, struct pci_device *d
 /* ACPI Device Switch functions */
 static Bool SISHotkeySwitchCRT1Status(ScrnInfoPtr pScrn,int onoff);/*hotkey pressing: switch CRT1 on/off*/
 static Bool SISHotkeySwitchCRT2Status(ScrnInfoPtr pScrn,ULong newvbflags ,ULong newvbflags3);/*LCD on/off*/
-static Bool SISHotkeySwitchMode(ScrnInfoPtr pScrn, Bool adjust);/*Resolution optimal function*/
 
 /* Optional functions */
 #ifdef SISDUALHEAD

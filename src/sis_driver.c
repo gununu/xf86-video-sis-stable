@@ -11290,56 +11290,6 @@ SISHotkeySwitchCRT1Status(ScrnInfoPtr pScrn, int onoff)
  
  return TRUE;
 }
-/**************************************************************************/
-static Bool
-SISHotkeySwitchMode(ScrnInfoPtr pScrn, Bool adjust)
-{
-   pointer hkeymode;
-   SISPtr pSiS = SISPTR(pScrn);
-   ScreenPtr pScreen = screenInfo.screens[pScrn->scrnIndex];
-   int dotClock;
-   int dotclock=65146;
-   int hdisplay=1024;
-
-   if(!VidModeGetCurrentModeline(pScrn->scrnIndex,&hkeymode,&dotClock))
-   return FALSE;
-          
-   if(!VidModeGetFirstModeline(pScrn->scrnIndex,&hkeymode,&dotClock))
-   return FALSE;
-  
-   do{   /* dotclock and hdisplay must given by parameters of 1024*768 */
-       if((VidModeGetDotClock(pScrn->scrnIndex,dotclock)==dotClock)&&(VidModeGetModeValue(hkeymode,0)==hdisplay)) 
-       {
-             pScrn->virtualX = 1024;
-	     pScrn->virtualY = 768;
-	    /* pSiS->scrnPitch = 4096;
-	     pSiS->scrnOffset = 4096;*/
-	     pScrn->zoomLocked=0;/* try for xf86ZoomViewport.*/
-	     pScrn->display->virtualX = 1024;
-	     pScrn->display->virtualY = 768;   
-	    /* xf86RandRSetNewVirtualAndDimensions(pScreen,1024,768,0,0,0);*/  
-	     if(!VidModeSwitchMode(pScrn->scrnIndex,hkeymode))
-             { 
-	            return FALSE;
-	     }	
-            /* xf86ZoomViewport(pScrn,1);*/	     
-       }
-   
-   } while(VidModeGetNextModeline(pScrn->scrnIndex,&hkeymode,&dotClock));   
-
-   xf86DrvMsg(0,X_INFO,"[Layout]:(display)scrnPitch=%d,(data)scrnOffset=%d.\n",pSiS->scrnPitch,pSiS->scrnOffset);
-   
-   xf86DrvMsg(0,X_INFO,"[Layout]:displayWidth=%d,displayHeight=%d.\n",pSiS->CurrentLayout.displayWidth,pSiS->CurrentLayout.displayHeight); 
-  
-   
-               xf86ZoomViewport(pScreen,1);
-
-	       SISAdjustFrame(ADJUST_FRAME_ARGS(pScrn, 0,0));
-
-   
-   return TRUE;
-}
-
 
 /**************************************************************************/
 static Bool
