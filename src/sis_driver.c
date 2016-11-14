@@ -105,8 +105,6 @@
 #include "sis_regs.h"
 #include "sis_dac.h"
 
-#include <vidmodeproc.h>
-
 #include "sis_driver.h"
 
 #include <X11/extensions/xf86dgaproto.h>
