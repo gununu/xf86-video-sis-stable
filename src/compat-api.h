@@ -77,8 +77,16 @@
 
 #define SCREEN_INIT_ARGS_DECL ScreenPtr pScreen, int argc, char **argv
 
-#define BLOCKHANDLER_ARGS_DECL ScreenPtr arg, pointer pTimeout, pointer pReadmask
-#define BLOCKHANDLER_ARGS arg, pTimeout, pReadmask
+#if XORG_VERSION_CURRENT < XORG_VERSION_NUMERIC(1,17,0,0,0)
+    #define BLOCKHANDLER_ARGS_DECL ScreenPtr arg, pointer pTimeout, pointer pReadmask
+    #define BLOCKHANDLER_ARGS arg, pTimeout, pReadmask
+#elif XORG_VERSION_CURRENT < XORG_VERSION_NUMERIC(1,19,0,0,0)
+    #define BLOCKHANDLER_ARGS_DECL ScreenPtr arg, void* pTimeout, void* pReadmask
+    #define BLOCKHANDLER_ARGS arg, pTimeout, pReadmask
+#else
+    #define BLOCKHANDLER_ARGS_DECL ScreenPtr arg, void* pTimeout
+    #define BLOCKHANDLER_ARGS arg, pTimeout
+#endif
 
 #define CLOSE_SCREEN_ARGS_DECL ScreenPtr pScreen
 #define CLOSE_SCREEN_ARGS pScreen
